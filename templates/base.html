@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My To-Do App</title>
+
+    <!-- Use a custom stylesheet for your app -->
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .ui.container {
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .ui.header {
+            color: #333;
+        }
+
+        .ui.action.input input {
+            border-color: #2185d0;
+            color: #333;
+        }
+
+        .ui.blue.button {
+            background-color: #2185d0;
+            color: #fff;
+        }
+
+        .ui.blue.button:hover {
+            background-color: #1678c2;
+        }
+
+        .ui.raised.segment {
+            background-color: #fff;
+            border: 1px solid #d4d4d5;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .ui.message {
+            background-color: #f0f9ff;
+            color: #2185d0;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .ui.header {
+            color: #2185d0;
+        }
+
+        .ui.green.label {
+            background-color: #21ba45;
+            color: #fff;
+        }
+
+        .ui.red.button {
+            background-color: #db2828;
+            color: #fff;
+        }
+
+        .ui.red.button:hover {
+            background-color: #b21c1c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui container">
+        <h1 class="ui center aligned header">My To-Do App</h1>
+
+        <form class="ui form" action="/add" method="post">
+            <div class="field">
+                <label style="color: #333;">Things to do</label>
+                <div class="ui action input">
+                    <input type="text" name="title" placeholder="Enter something to do">
+                    <button class="ui blue button" type="submit">Add</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="ui message">
+            <div class="header">Reminder:</div>
+            <p>Don't forget to complete your tasks!</p>
+        </div>
+
+        <hr>
+
+        {% for todo in todo_list %}
+        <div class="ui raised segment">
+            <h2 class="ui header">{{ todo.title }}</h2>
+
+            <div class="ui horizontal list">
+                <div class="item">
+                    {% if todo.complete == False %}
+                    <div class="ui grey label">Not Complete</div>
+                    {% else %}
+                    <div class="ui green label">Completed</div>
+                    {% endif %}
+                </div>
+                <div class="item">
+                    <a class="ui blue button" href="/update/{{ todo.id }}">Update</a>
+                </div>
+                <div class="item">
+                    <a class="ui red button" href="/delete/{{ todo.id }}">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
+
+
